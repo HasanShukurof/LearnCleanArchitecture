@@ -2,6 +2,11 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.kotlin.kapt)
+
+//    id ("com.google.devtools.ksp")
+//    id ("com.google.dagger.hilt.android")
 }
 
 android {
@@ -31,15 +36,17 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-    kotlinOptions {
-        jvmTarget = "11"
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
+        }
     }
     buildFeatures {
         compose = true
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.0.5"
+        kotlinCompilerExtensionVersion = "1.5.14"
     }
 }
 
@@ -60,9 +67,22 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.10.0")
+    // ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
 
+    // Gson
+    implementation("com.google.code.gson:gson:2.10.1")
 
+    // Retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
 
+    // Hilt
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
+    implementation(libs.hilt.navigation.compose)
+}
 
+kapt {
+    correctErrorTypes = true
 }
