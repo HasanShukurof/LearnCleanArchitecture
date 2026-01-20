@@ -2,6 +2,6 @@ package com.example.learncleanarchitecture.data.remote.dto
 
 
 data class MemeResponseDto(
-    val data: List<MemeDataDto>,
+    val data: MemeDataDto,
     val success: Boolean
 )
