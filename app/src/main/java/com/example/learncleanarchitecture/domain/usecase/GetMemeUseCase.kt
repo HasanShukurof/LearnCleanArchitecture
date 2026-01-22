@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetMemeUseCase @Inject constructor ( private val repo: MemeRepository) {
-    operator fun invoke(): Flow<Resource<List<Meme>>> {
+    suspend operator fun invoke(): Flow<Resource<List<Meme>>> {
         return repo.getMemes()
     }
 }

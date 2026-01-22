@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.learncleanarchitecture.presentation.meme_list.MemeListScreen
 import com.example.learncleanarchitecture.ui.theme.LearnCleanArchitectureTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,15 +25,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent{
-            Row (
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(color = Color.Gray),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                Text(text = "Hello World !")
-            }
+            MemeListScreen()
         }
     }
 }
