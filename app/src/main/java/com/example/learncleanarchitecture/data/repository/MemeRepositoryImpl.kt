@@ -1,9 +1,11 @@
 package com.example.learncleanarchitecture.data.repository
 
 import android.widget.Toast
+import com.example.learncleanarchitecture.data.local.room_db.MemeDao
 import com.example.learncleanarchitecture.data.remote.api.MemeApi
 import com.example.learncleanarchitecture.data.remote.dto.MemeDto
 import com.example.learncleanarchitecture.data.remote.mapper.toDomain
+import com.example.learncleanarchitecture.data.remote.mapper.toMemeEntity
 import com.example.learncleanarchitecture.domain.model.Meme
 import com.example.learncleanarchitecture.domain.repository.MemeRepository
 import com.example.learncleanarchitecture.domain.util.Resource
@@ -13,7 +15,10 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class MemeRepositoryImpl @Inject constructor(private val api: MemeApi): MemeRepository {
+class MemeRepositoryImpl @Inject constructor(
+    private val api: MemeApi,
+    private val dao: MemeDao
+): MemeRepository {
     override suspend fun getMemes(): Flow<Resource<List<Meme>>> = flow {
         emit(Resource.Loading())
 
@@ -24,6 +29,9 @@ class MemeRepositoryImpl @Inject constructor(private val api: MemeApi): MemeRepo
             if (response.isSuccessful && response.body() != null){
                 val image = response.body()!!.data.memeList.toDomain()
                 emit(Resource.Success(image))
+                dao.insertMemes(image.map {
+                    it.toMemeEntity()
+                })
             } else {
                 emit(Resource.Error("API xetasi: ${response.message()}"))
             }
