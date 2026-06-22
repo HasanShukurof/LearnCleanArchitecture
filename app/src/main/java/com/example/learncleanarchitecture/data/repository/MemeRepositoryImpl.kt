@@ -5,12 +5,16 @@ import com.example.learncleanarchitecture.data.local.room_db.MemeDao
 import com.example.learncleanarchitecture.data.remote.api.MemeApi
 import com.example.learncleanarchitecture.data.remote.dto.MemeDto
 import com.example.learncleanarchitecture.data.remote.mapper.toDomain
+import com.example.learncleanarchitecture.data.remote.mapper.toMeme
 import com.example.learncleanarchitecture.data.remote.mapper.toMemeEntity
 import com.example.learncleanarchitecture.domain.model.Meme
 import com.example.learncleanarchitecture.domain.repository.MemeRepository
 import com.example.learncleanarchitecture.domain.util.Resource
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
@@ -24,23 +28,37 @@ class MemeRepositoryImpl @Inject constructor(
 
         // cache mentiqini oyren basha dushve yaz, sonra try and cach yazilir
 
+        var errorMessage: String? = null
+
         try {
             val response = api.getMemes()
             if (response.isSuccessful && response.body() != null){
                 val image = response.body()!!.data.memeList.toDomain()
-                emit(Resource.Success(image))
+                dao.deleteMemes()
                 dao.insertMemes(image.map {
                     it.toMemeEntity()
                 })
             } else {
-                emit(Resource.Error("API xetasi: ${response.message()}"))
+                errorMessage = "API xetasi: ${response.message()}"
             }
         } catch (e: HttpException){
-            emit(Resource.Error("HTTP xetasi: ${e.code()} -> ${e.message()}"))
+            errorMessage = "HTTP xetasi: ${e.code()} -> ${e.message()}"
         } catch (e: IOException) {
-            emit(Resource.Error("Internet baglantinizi yoxlayin"))
+            errorMessage = "Internet baglantinizi yoxlayin"
         } catch (e: Exception) {
-            emit(Resource.Error("Gozlenilmez xeta bash verdi: ${e.localizedMessage}"))
+            errorMessage = "Gozlenilmez xeta bash verdi: ${e.localizedMessage}"
         }
+
+        emitAll(
+            dao.getAllMemes().map { entites ->
+                val mappedList = entites.map { it.toMeme() }
+                if (errorMessage != null) {
+                    Resource.Error(errorMessage,mappedList)
+                }else {
+                    Resource.Success(mappedList)
+                }
+            }
+        )
+
     }
 }

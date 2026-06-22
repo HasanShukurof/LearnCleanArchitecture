@@ -55,10 +55,26 @@ fun MemeListScreen(
                 .padding(paddingValues)
         ) {
             when {
-                state.isLoading -> {
+                state.isLoading && state.data.isEmpty() -> {
                     CircularProgressIndicator(
                         modifier = Modifier.align(Alignment.Center)
                     )
+                }
+                state.data.isNotEmpty() -> {
+                    if (state.error != null) {
+                        Text(
+                            text = state.error ?: "Xeta bash verdi",
+                            modifier = Modifier.align(Alignment.TopCenter)
+                        )
+                    }
+                    LazyVerticalGrid(
+                        columns = GridCells.Fixed(2),
+                        modifier = Modifier.padding(top = 18.dp)
+                    ) {
+                        items(state.data.size) { index ->
+                            MemeItem(viewModel,state.data[index])
+                        }
+                    }
                 }
                 state.error != null -> {
                     Column(
@@ -72,15 +88,7 @@ fun MemeListScreen(
                         }
                     }
                 }
-                else -> {
-                    LazyVerticalGrid(
-                        columns = GridCells.Fixed(2)
-                    ) {
-                        items(state.data.size) { index ->
-                            MemeItem(viewModel,state.data[index])
-                        }
-                    }
-                }
+
             }
         }
     }
@@ -112,7 +120,10 @@ fun MemeItem(
                     .fillMaxWidth()
                     .aspectRatio(1f)
             )
-
+            meme.name?.let {
+                Text(text = it,
+                    modifier = Modifier.padding(top = 7.dp).align(Alignment.CenterHorizontally))
+            }
         }
     }
 }

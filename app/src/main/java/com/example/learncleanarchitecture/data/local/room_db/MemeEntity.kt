@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "memeTable")
 data class MemeEntity(
-    @PrimaryKey val id: String?,
+    @PrimaryKey val id: String,
     @ColumnInfo("box_count")
     val boxCount: Int?,
     val name: String?,

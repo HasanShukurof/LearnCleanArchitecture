@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import com.example.learncleanarchitecture.data.local.room_db.MemeDao
 import com.example.learncleanarchitecture.data.local.room_db.MemeDatabase
+import com.example.learncleanarchitecture.data.practice.relations.PracticeDatabase
+import com.example.learncleanarchitecture.data.practice.relations.RelationDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,4 +33,35 @@ object DatabaseModule {
         return database.memeDao()
     }
 
+    @Provides
+    @Singleton
+    fun providePracticeDatabase(@ApplicationContext context: Context): PracticeDatabase {
+        return Room.databaseBuilder(
+            context,
+            PracticeDatabase::class.java,
+            "practice_db"
+        ).build()
+    }
+
+    @Provides
+    @Singleton
+    fun providePracticeDao(database: PracticeDatabase): RelationDao {
+        return database.relationDao()
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

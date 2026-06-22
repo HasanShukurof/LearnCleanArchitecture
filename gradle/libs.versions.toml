@@ -1,6 +1,6 @@
 [versions]
 agp = "8.9.1"  # 8.9.3-dən 8.9.1-ə endirin (daha stabil)
-kotlin = "2.2.0"  # 2.3.0-dan 2.1.0-a endirin (2.3.0 hələ yoxdur!)
+kotlin = "2.1.0"  # 2.2.0-da Hilt xətası verdiyi üçün 2.1.0-a endirildi
 coreKtx = "1.15.0"  # 1.17.0-dan endirin
 junit = "4.13.2"
 junitVersion = "1.2.1"  # 1.3.0-dan endirin
@@ -11,7 +11,7 @@ composeBom = "2024.12.01"  # 2025.12.01-dən düzəldin (2025 hələ yoxdur!)
 hilt = "2.51.1"
 material3 = "1.3.1"
 room-db = '2.6.1'
-ksp = "2.2.0-2.0.2"
+ksp = "2.1.0-1.0.29"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
