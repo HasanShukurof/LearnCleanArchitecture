@@ -7,6 +7,6 @@ import androidx.room.RoomDatabase
     entities = [UserEntity::class, PostEntity::class],
     version = 1
 )
-abstract class PracticeDatabase : RoomDatabase(){
-    abstract fun relationDao(): RelationDao
+abstract class PracticeDatabase: RoomDatabase() {
+    abstract fun practiceDao(): RelationDao
 }

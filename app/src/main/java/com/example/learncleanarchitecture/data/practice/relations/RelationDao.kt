@@ -8,13 +8,15 @@ import androidx.room.Transaction
 
 @Dao
 interface RelationDao {
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUser(user: UserEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend  fun insertPosts(posts: List<PostEntity>)
+    suspend fun insertPosts(posts: List<PostEntity>)
 
     @Transaction
-    @Query("SELECT * FROM user WHERE id = :userId")
-    suspend fun getUserWithPosts(userId: Int): UserWithPosts
+    @Query("SELECT * FROM user_table WHERE id=:userId")
+    fun getAllPosts(userId: Int): UserWithPosts
+
 }

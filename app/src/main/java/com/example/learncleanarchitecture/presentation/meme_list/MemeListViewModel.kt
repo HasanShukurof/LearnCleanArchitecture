@@ -38,7 +38,7 @@ class MemeListViewModel @Inject constructor(
                 PostEntity(1,"Post-1",1),
                 PostEntity(2,"Post-2",1),
             ))
-            val result = dao.getUserWithPosts(1)
+            val result = dao.getAllPosts(1)
             Log.e("Relation Test: ","User: ${result.user.name}, Posts: ${result.posts.map { it.title }}")
         }
     }
