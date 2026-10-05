@@ -2,8 +2,8 @@ package com.example.learncleanarchitecture.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.learncleanarchitecture.data.local_db.NoteDao
-import com.example.learncleanarchitecture.data.local_db.NoteEntity
+import com.example.learncleanarchitecture.data.local_db.note.NoteDao
+import com.example.learncleanarchitecture.data.local_db.note.NoteEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow

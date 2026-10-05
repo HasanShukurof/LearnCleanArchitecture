@@ -2,8 +2,8 @@ package com.example.learncleanarchitecture.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.learncleanarchitecture.data.local_db.NoteDao
-import com.example.learncleanarchitecture.data.local_db.NoteDatabase
+import com.example.learncleanarchitecture.data.local_db.note.NoteDao
+import com.example.learncleanarchitecture.data.local_db.note.NoteDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

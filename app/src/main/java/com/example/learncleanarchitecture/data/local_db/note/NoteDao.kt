@@ -1,4 +1,4 @@
-package com.example.learncleanarchitecture.data.local_db
+package com.example.learncleanarchitecture.data.local_db.note
 
 import androidx.room.Dao
 import androidx.room.Insert
