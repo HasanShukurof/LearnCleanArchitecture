@@ -2,6 +2,7 @@ package com.example.learncleanarchitecture.di
 
 import android.content.Context
 import androidx.room.Room
+import com.example.learncleanarchitecture.data.local_db.category.CategoryDao
 import com.example.learncleanarchitecture.data.local_db.note.NoteDao
 import com.example.learncleanarchitecture.data.local_db.note.NoteDatabase
 import dagger.Module
@@ -16,17 +17,12 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideNoteDatabase(@ApplicationContext context: Context): NoteDatabase {
-        return Room.databaseBuilder(
-            context,
-            NoteDatabase::class.java,
-            "note_db"
-        ).build()
-    }
-    @Provides
-    @Singleton
-    fun provideNoteDao(db: NoteDatabase): NoteDao {
-        return db.noteDao()
-    }
+    fun provideNoteDatabase(@ApplicationContext context: Context): NoteDatabase =
+        Room.databaseBuilder(context, NoteDatabase::class.java, "note_db").build()
 
+    @Provides
+    fun provideNoteDao(db: NoteDatabase): NoteDao = db.noteDao()
+
+    @Provides
+    fun provideCategoryDao(db: NoteDatabase): CategoryDao = db.categoryDao()
 }
